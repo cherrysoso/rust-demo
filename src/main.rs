@@ -14,7 +14,11 @@ fn main() {
         io::stdin().read_line(&mut guess).expect("无法读取"); 
         println!("你猜测的数是：{}",guess);
         // 显示类型u32
-        let guess:u32=guess.trim().parse().expect("please type a number!"); //字符串，先去除空格，然后转化成u32
+        //let guess:u32=guess.trim().parse().expect("please type a number!"); //字符串，先去除空格，然后转化成u32，输入非数字，程序会崩溃，提高健壮性
+        let guess:u32=match guess.trim().parse(){
+            Ok(num) => num,
+            Err(_) => continue,
+        };
         // 比较大小，
         match guess.cmp(&secret_number){
             Ordering::Less => println!("Too small"),
